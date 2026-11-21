@@ -12,6 +12,7 @@ __pycache__/
 data/
 
 # 临时工作目录
+.scratch/
 .screenshots/
 .slidep/
 .tmp_labels/
