@@ -1,0 +1,69 @@
+{
+  "decision_version": "v1",
+  "title": "研究期与样本范围决策（由代表性样本验证结果支撑）",
+  "decided_at_utc": "2026-11-13T10:27:00Z",
+  "evidence": {
+    "validation_run": "vs_3b3a9d4db71b1186ad8204411a891f41",
+    "validation_manifest": "data/recon/vs_3b3a9d4db71b1186ad8204411a891f41/manifest.json",
+    "validation_generated_at_utc": "2026-11-13T10:26:12Z",
+    "validation_data_digest": "c69ad3b4699d166ee6261d731f931f7d05b6221ed7e948efcf93f6b07dd15f63",
+    "metrics": {
+      "event_retrieval_coverage.coverage": "1.000000",
+      "balance_reconstruction_error.checks": 15,
+      "balance_reconstruction_error.max_abs_error_token": "0.000000",
+      "unverifiable_share.share": "0.000000",
+      "unverifiable_share.validation_rows": 161
+    }
+  },
+  "observation_start_block": 10274701,
+  "observation_start_basis": "两个 issuer 的共同观察期从较晚出现事件的一侧开始：USDC 在快照中的首个黑名单事件即区块 10,274,701（样本槽位 S6，重建与独立端点均核对通过）。该区块之前快照只有 USDT 的 90 条事件、USDC 为 0，若把这段并入观察期，任何 issuer 比较都会把「USDC 尚未出现事件」当成「USDC 冻结更少」。起点因此由数据定，不由日历日定。",
+  "study_cutoff_block": 26404630,
+  "study_cutoff_block_hash": "0x17925a9e5d45e2ec5d9af7f5d8fd47e90d77a1c0ac0027a6e94126271d9c0b50",
+  "study_cutoff_finalized_head_block": 26405361,
+  "study_cutoff_basis": "取固定日志快照的 end_block：它是重放可闭合的最后一个区块，且该区块的 canonical 区块头由独立端点复核通过、不高于验证时的 finalized 头（26,405,361）、D2 余额与截止日黑名单状态也在该区块上完成独立核对。研究截止日按区块高度定义（docs/definitions.md 3.3），不按运行时刻定义。",
+  "scope": {
+    "chains": ["ethereum"],
+    "tokens": ["USDT", "USDC"],
+    "event_classes": ["freezing", "unfreezing", "destruction"],
+    "core_path": "观察期内全部可检索事件（匹配失败不剔除，不可核验按 R2/R3 标注后仍留在核心集）",
+    "restricted_path": "仅有公开记录匹配证据且标签日期完整的子集，仅用于 sanctions timing gap 与 exchange outflow 描述性统计，不与核心结论拼接",
+    "multi_event_transactions": "structurally_absent",
+    "events_before_start_by_token": {"USDT": 90, "USDC": 0},
+    "rationale": "验证表覆盖 USDT 与 USDC × freezing/unfreezing/destruction、三个合约版本与交易作用域内的多日志交易；多事件交易在 6,060 条日志中为 0 笔，故样本范围不承诺该情形，一旦出现须先补验证再扩展。"
+  },
+  "supported_by": {
+    "observation_start_block": [
+      "scope_inputs.first_event_block_by_token.USDC",
+      "scope_inputs.event_counts_by_token_and_class.USDC.freezing",
+      "metrics.event_retrieval_coverage.by_token.USDC.coverage",
+      "metrics.sample_matrix.event_classes_by_token.USDC"
+    ],
+    "study_cutoff_block": [
+      "inputs.study_cutoff_block",
+      "scope_inputs.snapshot_end_block",
+      "scope_inputs.cutoff_block_hash",
+      "scope_inputs.finalized_head_block",
+      "metrics.balance_reconstruction_error.by_reference.at_study_cutoff.checks",
+      "counts.balance_reference.at_study_cutoff"
+    ],
+    "sample_scope": [
+      "scope_inputs.declared_sample_slots",
+      "metrics.event_retrieval_coverage.declared_sample_slots",
+      "metrics.event_retrieval_coverage.block_level_log_parity",
+      "metrics.balance_reconstruction_error.checks",
+      "metrics.unverifiable_share.validation_rows",
+      "metrics.sample_matrix.contract_versions"
+    ],
+    "multi_event_transactions": [
+      "scope_inputs.txs_with_multiple_events",
+      "scope_inputs.total_registered_events"
+    ]
+  },
+  "open_items": [
+    "人工签署：验证表 reviewer 仍为 agent:auto-cross-check；本决策依据的指标由脚本跨端点核对得出，人工逐条签署尚未完成。",
+    "交易所标签层未接入（EXCHANGE_LABELS_API_URL 未配置），exchange-outflow 受限子集当前无法成立。",
+    "观察期前 90 条 USDT 事件不进入任何 issuer 比较；若评审要求覆盖 USDT 早期历史，只能作为单 issuer 描述另报，不得并入比较。",
+    "多事件交易一旦出现（本快照为 0 笔），需先以人工核对样本重新覆盖该路径，再扩展核心集。",
+    "链范围仍以 Ethereum 为验证样本范围；其他链只登记不采集（chain_registry）。"
+  ]
+}

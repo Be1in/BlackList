@@ -1,0 +1,9 @@
+# Freeze-event reconstruction: collection + table stack
+# Python 3.13 (.venv). Versions pinned to the installed environment.
+
+web3==8.0.0            # Ethereum JSON-RPC, event logs, archive-state eth_call
+python-dotenv==1.2.4   # reads .env (ETHEREUM_ARCHIVE_RPC_URL, ...)
+pandas==3.1.1          # event / balance / validation tables
+pyarrow==26.0.1        # parquet output
+requests==2.34.2       # OFAC SDN downloads, Etherscan API
+tqdm==4.70.1           # progress for block-range scans

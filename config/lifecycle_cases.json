@@ -1,0 +1,136 @@
+{
+  "dataset_contract_version": "v1",
+  "note": "生命周期案例：每个案例是同一冻结生命周期的一组交易，由同一条重建流水线逐笔处理，再在案例层做顺序、口径归属与版本切换的对照。expect 为事先声明的预期（依据 docs/definitions.md 与工单 01 人工核对样本），重建结果必须与之相符，否则运行失败。",
+  "cases": {
+    "unfreeze": {
+      "title": "unfreezing 关闭 episode 后重新冻结（USDT）",
+      "summary": "USDT 0xd8500c631dc32fa18645b7436344a99e4825e10e：18,693,913 冻结（episode 1 起点）→ 22,766,755 解冻 → 23,141,909 重新冻结（episode 2 起点）→ 截止日仍冻结。同一区块附近该地址另有 USDC 冻结日志（23,140,604），属于另一合约，不参与本案例的 USDT 状态机。",
+      "targets": [
+        {
+          "tx_hash": "0x98d35f13d29567f0dc0f1b913fc48d13496904d615983d86d2a7a9ea04845306",
+          "expected_token": "USDT",
+          "expected_event_class": "freezing"
+        },
+        {
+          "tx_hash": "0x7fcf3b630b8c51b094e469a914709850224016341c0d19bfdf5e0c4d7f5c4346",
+          "expected_token": "USDT",
+          "expected_event_class": "unfreezing"
+        },
+        {
+          "tx_hash": "0xd0446f8ad8bae96f926b73e37c4953f0f21740321f44801a9e99ee85d2090418",
+          "expected_token": "USDT",
+          "expected_event_class": "freezing"
+        }
+      ],
+      "expect": {
+        "event_classes": ["freezing", "unfreezing", "freezing"],
+        "blacklist_transitions": ["true", "true", "true"],
+        "contract_version_labels": ["TetherToken", "TetherToken", "TetherToken"],
+        "at_freeze_raw": ["8123", "8123"],
+        "at_event_raw": ["8123"],
+        "at_study_cutoff_raw": {"0xd8500c631dc32fa18645b7436344a99e4825e10e": "8123"},
+        "sample_slots": ["S3_USDT_unfreezing"]
+      }
+    },
+    "destruction": {
+      "title": "destruction 不关闭 episode，D2 归零（USDT）",
+      "summary": "USDT 0x4f47bc496083c727c5fbe3ce9cdf2b0f6496270c：16,750,720 冻结（episode 起点）→ 18,749,899 重复冻结（状态未变，R9）→ 24,721,916 销毁全部余额（状态前后均为 blacklisted）→ 截止日仍冻结但余额为 0。",
+      "targets": [
+        {
+          "tx_hash": "0xb09249cba50c3516d4953ad7ff01503942323572fd473e65a1b6d7c2bf8cd6f6",
+          "expected_token": "USDT",
+          "expected_event_class": "freezing"
+        },
+        {
+          "tx_hash": "0x6d67fdee0570c5d06c504cfd06b0837ae1b86e38deb0c7453b2b3b34948c12e1",
+          "expected_token": "USDT",
+          "expected_event_class": "freezing"
+        },
+        {
+          "tx_hash": "0xa534278b2fef7e1325cb5ab70415a4386a702221ee282c98ab98a3c0fa466d8b",
+          "expected_token": "USDT",
+          "expected_event_class": "destruction"
+        }
+      ],
+      "expect": {
+        "event_classes": ["freezing", "freezing", "destruction"],
+        "blacklist_transitions": ["true", "false", "false"],
+        "contract_version_labels": ["TetherToken", "TetherToken", "TetherToken"],
+        "at_freeze_raw": ["36950426457"],
+        "at_event_raw": ["58148619145"],
+        "at_study_cutoff_raw": {"0x4f47bc496083c727c5fbe3ce9cdf2b0f6496270c": "0"},
+        "destruction_amount_raw": ["", "", "58148619145"],
+        "sample_slots": ["S5_USDT_destruction"]
+      }
+    },
+    "tx_scope": {
+      "title": "交易作用域：多日志交易只产出已登记事件行（USDT）",
+      "summary": "工单 02 的样本交易共 3 条日志，黑名单事件位于中间（log_index 60），前后两条来自另一个合约。交易作用域重建必须只把已登记事件写成事件行，且位置与独立端点收据一致。全量 6,060 条日志中没有任何一笔交易含两条以上黑名单事件，因此本案例同时记录该结构性结论，作为“多事件交易”条款的替代验证。",
+      "targets": [
+        {
+          "tx_hash": "0x5e520c7bff1f053a6a319397b1518f15923c23329e0639b6fc66a48f47772bd4",
+          "expected_token": "USDT",
+          "expected_event_class": "freezing"
+        }
+      ],
+      "expect": {
+        "event_classes": ["freezing"],
+        "blacklist_transitions": ["true"],
+        "contract_version_labels": ["TetherToken"],
+        "at_freeze_raw": ["5844309"],
+        "at_study_cutoff_raw": {"0x12ea80238c7d805d003ce793594e92d84a6f4e8d": "5844309"},
+        "sample_slots": ["S1_USDT_freezing"]
+      },
+      "structural_scan": true
+    },
+    "version_switch": {
+      "title": "合约版本切换前后解析一致（USDC 代理）",
+      "summary": "同一个 USDC 代理（0xA0b8…eB48）在 10,274,701（FiatTokenV1）与 25,705,174（FiatTokenV2_2）各发生一次冻结。两次事件在同一条流水线下解码（地址均取自 topic）、查询同一组选择器，版本随事件记录；案例另行定位实现合约发生替换的区块，并用独立端点复核切换前后的代码哈希。",
+      "targets": [
+        {
+          "tx_hash": "0x15cbde1b9bf285db50e22eeff1a7d04ea267dd94726df8ecabdb4cb6c2b590cb",
+          "expected_token": "USDC",
+          "expected_event_class": "freezing"
+        },
+        {
+          "tx_hash": "0xc9edfdbb67b48f26822d8769f63cb890599d98dec539f7f76b92edcc8a2ff787",
+          "expected_token": "USDC",
+          "expected_event_class": "freezing"
+        }
+      ],
+      "expect": {
+        "event_classes": ["freezing", "freezing"],
+        "blacklist_transitions": ["true", "true"],
+        "contract_version_labels": ["FiatTokenV1", "FiatTokenV2_2"],
+        "at_freeze_raw": ["100000000000", "230"],
+        "at_study_cutoff_raw": {
+          "0xaa05f7c7eb9af63d6cc03c36c4f4ef6c37431ee0": "100000000000",
+          "0xe05f529f5284d75624eba386cb716928c3b54a2a": "230"
+        },
+        "sample_slots": ["S6_USDC_freezing_v1", "S2_USDC_freezing"]
+      },
+      "version_boundary": {
+        "token": "USDC",
+        "proxy_slot": "fiat_token_implementation"
+      }
+    },
+    "unfreeze_usdc": {
+      "title": "USDC 解冻后截止日不再冻结（无 D2）",
+      "summary": "USDC 0x284b181ecb4bc6678370044cfe64d6f3254e9a7a 在 26,038,856 收到 UnBlacklisted：事件前处于 blacklisted（D1 缺失不影响本案例，at_event 为诊断值），截止日已不在黑名单集合，因此不产生 at_study_cutoff 行。补齐代表性样本中 USDC × unfreezing 的覆盖。",
+      "targets": [
+        {
+          "tx_hash": "0xac8ab48c62fda0fd5d4dd919ae36ac9ab9cc52e4f9f8ab50ba7a403d3a29d5e0",
+          "expected_token": "USDC",
+          "expected_event_class": "unfreezing"
+        }
+      ],
+      "expect": {
+        "event_classes": ["unfreezing"],
+        "blacklist_transitions": ["true"],
+        "contract_version_labels": ["FiatTokenV2_2"],
+        "at_event_raw": ["23409304687"],
+        "sample_slots": ["S4_USDC_unfreezing"]
+      }
+    }
+  }
+}

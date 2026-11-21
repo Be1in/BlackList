@@ -1,0 +1,404 @@
+{
+  "dataset": "Observable Stablecoin Freeze Events (Ethereum, USDT/USDC)",
+  "generated_at_utc": "2026-11-19T15:58:45Z",
+  "scope": {
+    "chain": "ethereum",
+    "chain_id": 1,
+    "tokens": [
+      "USDT",
+      "USDC"
+    ],
+    "observation_start_block": 10274701,
+    "study_cutoff_block": 26404630,
+    "events": 5970,
+    "balances": 9466,
+    "validation": 21492,
+    "d2_population": 3573
+  },
+  "batches": {
+    "core": {
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/manifest.json",
+      "batch_id": "core_64c8c7f9452291663926113a2b1ecc20",
+      "data_digest": "49db21c8b496447d88f1fafde4f744c890423203e2830f83bfaeefbdd59d2fd5",
+      "artifact_digest": "fdea03eaa4812e77c287086222e79e8b1c2209647cc84f697873a41ad85e7b01"
+    },
+    "match": {
+      "path": "data/recon/match_e7a32e2a4120dccb5d5cfe1edf360766/manifest.json",
+      "batch_id": "match_e7a32e2a4120dccb5d5cfe1edf360766",
+      "data_digest": "2d8cbf6beb908966824699b5468ee5776c54d114434b19e1dbb5801db730c3b6",
+      "artifact_digest": "78728ca30b4992a75e1213ac7c740650999d5f26ff0c950c439c638505d422b1"
+    },
+    "compare": {
+      "path": "data/recon/compare_9f973ff43a20c53a9fdf9bfac13675be/manifest.json",
+      "batch_id": "compare_9f973ff43a20c53a9fdf9bfac13675be",
+      "data_digest": "4768622b7cc05db02d49f2a36bbad70ff4ac448b6a26b26d375d39c664744ec8",
+      "artifact_digest": "0e30c7c9232dfd44b0c937711599df9313233f57a0ddf71fe5a8e8891779e89a"
+    },
+    "restrict": {
+      "path": "data/recon/restrict_4c003f027d634313a28140234c40a510/manifest.json",
+      "batch_id": "restrict_4c003f027d634313a28140234c40a510",
+      "data_digest": "dedfccd8a4120a908079b702909bb3605d5cf4be33d0dda100af59dbd07580f1",
+      "artifact_digest": "05f583e882c991703809fbc01fa5e007197c5659ce17be755fea111f4481c925"
+    },
+    "materials": {
+      "path": "data/recon/materials_fe2495c8b40a1d848c29802a422bbb22/manifest.json",
+      "batch_id": "materials_fe2495c8b40a1d848c29802a422bbb22",
+      "data_digest": "34432a2ceb9ef057e361a485822d330b1e705a9478768b02cf84dc6db48f3f8e",
+      "artifact_digest": "f32a3ea13b97762b954d52ab9f527cd60fcbdaac7e881ba23920abea4f3dbc69"
+    }
+  },
+  "audit_summary": {
+    "checks": 67,
+    "pass": 67,
+    "fail": 0,
+    "high_severity_failures": [],
+    "all_failures": []
+  },
+  "files": [
+    {
+      "key": "events",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/events.csv",
+      "role": "核心事件表：一条日志一行",
+      "bytes": 10446792,
+      "rows": 5970,
+      "sha256": "caf8a1690b0ec0011aede1375b733dba6a617bd94c193b60058d44b5582210a6"
+    },
+    {
+      "key": "events_parquet",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/events.parquet",
+      "role": "核心事件表 Parquet 副本",
+      "bytes": 1929374,
+      "rows": null,
+      "sha256": "1aab23e45fbff0a849e29cd85bedc7fdb5fa049833a56b5d5669fe82027ea61e"
+    },
+    {
+      "key": "balances",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/balances.csv",
+      "role": "D1 / at_event / D2 余额",
+      "bytes": 4636205,
+      "rows": 9466,
+      "sha256": "b0078fd540e3b4ceb9b7c22a4a709de63232f7cf2021d93f3661452bc41c82fe"
+    },
+    {
+      "key": "balances_parquet",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/balances.parquet",
+      "role": "余额 Parquet 副本",
+      "bytes": 1845997,
+      "rows": null,
+      "sha256": "ca2208ce04ebfa02c6c2857e3e023547f152ff12fdfa73eef35daa566055cc96"
+    },
+    {
+      "key": "validation",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/validation.csv",
+      "role": "21,492 条核对",
+      "bytes": 5970961,
+      "rows": 21492,
+      "sha256": "89a3b34543f0aba878b4e80f97949defa862642747f88a8c5ba2c83ae0c407f2"
+    },
+    {
+      "key": "validation_parquet",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/validation.parquet",
+      "role": "核对 Parquet 副本",
+      "bytes": 712559,
+      "rows": null,
+      "sha256": "5ea00ddd783f0b6a50a93d3b1fd5355886be443cf562ab41ab678bc103c146bb"
+    },
+    {
+      "key": "chain_registry",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/chain_registry.csv",
+      "role": "链登记",
+      "bytes": 476,
+      "rows": 2,
+      "sha256": "6ca271a02274eaa724cceb04c4f6d4c12c1bc6d9f237decae065a8a4c622b966"
+    },
+    {
+      "key": "coverage_gaps",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/coverage_gaps.csv",
+      "role": "覆盖差集（0 行）",
+      "bytes": 98,
+      "rows": 0,
+      "sha256": "1b4ec1834d1f66e9c0c77ef72dc9257f3960a4812bf7600d2ceca7156f0e0a03"
+    },
+    {
+      "key": "scope_excluded",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/scope_excluded.csv",
+      "role": "观察期外 90 条事件",
+      "bytes": 31999,
+      "rows": 90,
+      "sha256": "7c262f967e2f115c41c7b0af8b0d377df62ba8e5096fae62c155727d09227277"
+    },
+    {
+      "key": "core_manifest",
+      "path": "data/recon/core_64c8c7f9452291663926113a2b1ecc20/manifest.json",
+      "role": "核心批次清单与摘要",
+      "bytes": 9246,
+      "rows": null,
+      "sha256": "0c36c09993144b44a99c184a5713a0c8e12496405d33b73ae5675615d28c806d"
+    },
+    {
+      "key": "matches",
+      "path": "data/recon/match_e7a32e2a4120dccb5d5cfe1edf360766/matches.csv",
+      "role": "每事件 × 2 层匹配结果",
+      "bytes": 5087997,
+      "rows": 11940,
+      "sha256": "ad83634477a87617d9387aaa5169c66c6a7b3a064f9c1e624d08607f4c6a5bab"
+    },
+    {
+      "key": "missingness",
+      "path": "data/recon/match_e7a32e2a4120dccb5d5cfe1edf360766/missingness.csv",
+      "role": "逐字段缺失",
+      "bytes": 5054,
+      "rows": 96,
+      "sha256": "d606d47c0af7ceca18becbcce993468f322d1956f453379ee554af426c4b9ec6"
+    },
+    {
+      "key": "match_manifest",
+      "path": "data/recon/match_e7a32e2a4120dccb5d5cfe1edf360766/manifest.json",
+      "role": "匹配批次清单",
+      "bytes": 3364,
+      "rows": null,
+      "sha256": "515c05a0dc69c96ab0a50a4c24b23ac2f574652b415e003965d78e3983393d59"
+    },
+    {
+      "key": "comparison",
+      "path": "data/recon/compare_9f973ff43a20c53a9fdf9bfac13675be/comparison.csv",
+      "role": "19 指标 × 2 issuer",
+      "bytes": 8906,
+      "rows": 38,
+      "sha256": "06389d6e3ea3d3d0ace4bbb88c5008ba52d2737b9649fed2580f9140b24ef735"
+    },
+    {
+      "key": "differences",
+      "path": "data/recon/compare_9f973ff43a20c53a9fdf9bfac13675be/differences.csv",
+      "role": "19 行差值",
+      "bytes": 4814,
+      "rows": 19,
+      "sha256": "52076f574a3d2dd706ac614d31919cddbdc34769755eeec98dcfcf417a8e88b1"
+    },
+    {
+      "key": "sensitivity",
+      "path": "data/recon/compare_9f973ff43a20c53a9fdf9bfac13675be/sensitivity.csv",
+      "role": "26 行敏感性",
+      "bytes": 4931,
+      "rows": 26,
+      "sha256": "0e00331ce595a5bd7bc8fe54bbcccf31fb92aa83d127243e3159b1ec83eb8d7f"
+    },
+    {
+      "key": "restricted_timing",
+      "path": "data/recon/restrict_4c003f027d634313a28140234c40a510/timing_gaps.csv",
+      "role": "12 行 timing gap",
+      "bytes": 5882,
+      "rows": 16,
+      "sha256": "382abfaee42a495efe83b98df3da871fc70576c10e3b2682d5e1ddd53182cc65"
+    },
+    {
+      "key": "restricted_outflows",
+      "path": "data/recon/restrict_4c003f027d634313a28140234c40a510/exchange_outflows.csv",
+      "role": "6 行 outflow",
+      "bytes": 2284,
+      "rows": 6,
+      "sha256": "80ed41008b3e22f68193ae582111d4d74ace0f7a6d12410c64394205dd807795"
+    },
+    {
+      "key": "restricted_balances",
+      "path": "data/recon/restrict_4c003f027d634313a28140234c40a510/frozen_balances.csv",
+      "role": "8 行受限余额",
+      "bytes": 2745,
+      "rows": 8,
+      "sha256": "7f68f4ae2844b91a52461664cd392fbc0080315c63021ce8a1f09514e326bc93"
+    },
+    {
+      "key": "materials_index",
+      "path": "data/recon/materials_fe2495c8b40a1d848c29802a422bbb22/materials_index.csv",
+      "role": "四项支撑材料索引",
+      "bytes": 14430,
+      "rows": 32,
+      "sha256": "d0d152efc60708ef8973015b630be8c44d36cec26b201fbc3eed76e30312bdb5"
+    },
+    {
+      "key": "field_availability",
+      "path": "data/recon/materials_fe2495c8b40a1d848c29802a422bbb22/field_availability.csv",
+      "role": "116 字段可得性",
+      "bytes": 20312,
+      "rows": 116,
+      "sha256": "630c8b569c70fdbd4eef8f5b35d51585e353fe828d36f67abff4f28ba01d7c52"
+    },
+    {
+      "key": "metric_coverage",
+      "path": "data/recon/materials_fe2495c8b40a1d848c29802a422bbb22/metric_coverage.csv",
+      "role": "106 指标覆盖",
+      "bytes": 35842,
+      "rows": 110,
+      "sha256": "7582fd6f1f68787d494cf63e040676d85a31deac4f618466272e79a929e3ddd8"
+    },
+    {
+      "key": "wording_checks",
+      "path": "data/recon/materials_fe2495c8b40a1d848c29802a422bbb22/wording_checks.csv",
+      "role": "32 行措辞核对",
+      "bytes": 10593,
+      "rows": 32,
+      "sha256": "183e1ff4ec3f20da78ba93ebb433eb3767fe67eaeacfa225a4a0b9af2a028b82"
+    },
+    {
+      "key": "chain_scope",
+      "path": "data/recon/materials_fe2495c8b40a1d848c29802a422bbb22/chain_scope.csv",
+      "role": "链范围与待确认项",
+      "bytes": 1117,
+      "rows": 2,
+      "sha256": "12a68dbfc083aca84b924f4a87af8603517b0ba189b1473d8e8255b4a1ab77d1"
+    },
+    {
+      "key": "sample_events",
+      "path": "data/samples/sample_events.csv",
+      "role": "小样本事件",
+      "bytes": 10344,
+      "rows": 6,
+      "sha256": "6d3c6c2b11e11ad671216ded7538c5a2673f80b6e7988271b5a76ebf823d9f9a"
+    },
+    {
+      "key": "sample_balances",
+      "path": "data/samples/sample_balances.csv",
+      "role": "小样本余额",
+      "bytes": 5007,
+      "rows": 11,
+      "sha256": "f7dec0131c22f63c9ac7de2cd7491312dc6c868c69437a3662249be003b2d0da"
+    },
+    {
+      "key": "sample_matches",
+      "path": "data/samples/sample_matches.csv",
+      "role": "小样本匹配",
+      "bytes": 6011,
+      "rows": 12,
+      "sha256": "c6077d9060802fc53861d9c86a3b8e16a221700ca0b69940c5625506846ec6bf"
+    },
+    {
+      "key": "sample_validation",
+      "path": "data/samples/sample_validation.csv",
+      "role": "小样本核对",
+      "bytes": 7853,
+      "rows": 25,
+      "sha256": "b0793a2ae361e0217130bdde5cbd098c43afabfc49387e1a4bd83fe291158dd0"
+    },
+    {
+      "key": "dictionary_md",
+      "path": "docs/data-dictionary.md",
+      "role": "数据字典",
+      "bytes": 26668,
+      "rows": null,
+      "sha256": "28607005f4ce0fb9c1a7f20c983cd6245f6b21610bbd5cdc302cde39d535debb"
+    },
+    {
+      "key": "dictionary_csv",
+      "path": "docs/data-dictionary.csv",
+      "role": "数据字典机器可读副本",
+      "bytes": 8998,
+      "rows": 116,
+      "sha256": "65b3df6ec89aa1b255655b0868cac0fcc626fa69a7dc952daf5fa71af7b5c91d"
+    },
+    {
+      "key": "definitions",
+      "path": "docs/definitions.md",
+      "role": "事件与余额定义契约",
+      "bytes": 13120,
+      "rows": null,
+      "sha256": "96b6cda37bd972f84d12206b129da734a2112e11bf002bc35403e6c60f8eab8a"
+    },
+    {
+      "key": "validation_table",
+      "path": "docs/validation-table.md",
+      "role": "验证表协议",
+      "bytes": 19426,
+      "rows": null,
+      "sha256": "903c7dcf285cbfac1da9a5f3d61d13d468cd7018eea89505c37db7d881c71d06"
+    },
+    {
+      "key": "known_issues",
+      "path": "docs/known-issues.md",
+      "role": "已登记缺口与验证入口",
+      "bytes": 3811,
+      "rows": null,
+      "sha256": "f4788b5ba7177cd39c10478cae78f0f352c2bdcd793f4b1959798467ae04c8d2"
+    },
+    {
+      "key": "audit_report",
+      "path": "docs/dataset-audit.md",
+      "role": "契约审计报告",
+      "bytes": 4027,
+      "rows": null,
+      "sha256": "af4a45ccc4bac3a96c80745a4e67e629dab3e4733b9af26ffce086c14a5c1936"
+    },
+    {
+      "key": "manual_signoff_doc",
+      "path": "docs/manual-signoff.md",
+      "role": "人工签署说明",
+      "bytes": 5144,
+      "rows": null,
+      "sha256": "07b0027031370ae08858d1f3c7e6120e470b5b5d0bb412e19d80c812a4a26a48"
+    },
+    {
+      "key": "manual_signoff_sample",
+      "path": "data/derived/manual_signoff_sample.csv",
+      "role": "26 行抽样签署表",
+      "bytes": 12934,
+      "rows": 26,
+      "sha256": "0007a6963264eed4556335099ac3b60aa54554416a17d881fb963d8c289cbb9b"
+    },
+    {
+      "key": "dataset_card",
+      "path": "DATASET.md",
+      "role": "数据说明（datasheet）",
+      "bytes": 8924,
+      "rows": null,
+      "sha256": "8dd792111cd55af216cfe75cec521c866b998fed8a92b46a17dc43064637ed85"
+    },
+    {
+      "key": "glossary",
+      "path": "GLOSSARY.md",
+      "role": "术语表",
+      "bytes": 2960,
+      "rows": null,
+      "sha256": "3560b72191d41e1abbec77883ccdf9753f416a98da2fb182f49049ab9a3ebf85"
+    },
+    {
+      "key": "adr_designation_dates",
+      "path": "docs/adr/0002-entity-level-designation-dates.md",
+      "role": "指定日接入决策记录",
+      "bytes": 3413,
+      "rows": null,
+      "sha256": "8328e9da9ac1cf835362d08762cf4e37db624e0173e6c1fde3136fe760184ad7"
+    },
+    {
+      "key": "d2_population_full",
+      "path": "data/derived/d2_population_full.csv",
+      "role": "D2 全量总体（3,573）",
+      "bytes": 408396,
+      "rows": 3573,
+      "sha256": "3334f6b243df4bbda74f955f3911453966089e4364f896ac1d1938e3ee156aa0"
+    },
+    {
+      "key": "event_state_corrections",
+      "path": "data/derived/event_state_corrections.csv",
+      "role": "16 行状态修正",
+      "bytes": 6719,
+      "rows": 16,
+      "sha256": "3b1abb775d498846e11a77b4a6317783883706379274ecde3d01560e7e1fa809"
+    },
+    {
+      "key": "cutoff_gap",
+      "path": "data/derived/cutoff_blacklist_gap.json",
+      "role": "29 地址缺口证据",
+      "bytes": 11756,
+      "rows": null,
+      "sha256": "e97fce62efc6132fd72e01131bcf51211dbaab6b4578090988a7a71e0d43061c"
+    },
+    {
+      "key": "audit",
+      "path": "data/derived/dataset_audit.json",
+      "role": "67 项审计结果",
+      "bytes": 11506,
+      "rows": null,
+      "sha256": "57c8abdc30a891e5377f338eb983f650481081a50d556903d86909cecff38ea2"
+    }
+  ],
+  "known_issues": []
+}

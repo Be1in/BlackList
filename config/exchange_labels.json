@@ -1,0 +1,13 @@
+{
+ "schema_version": "v1",
+ "purpose": "Historical exchange labels with a date each. Ticket 06 attaches them as a separate match layer; they never enter the core event table.",
+ "date_rule": [
+  "每条标签必须有 label_date 与 label_date_basis；无日期标签按 R5 保留在 matches 表，只参与 missing-label 敏感性。",
+  "label_date 晚于事件时间的标签不得用于解释该事件（记 match_status = not_applicable，证据保留）。",
+  "当前列表（如交易所今天的公开地址列表）不能当历史标签使用：它没有生效日期，若有地址被冻结前已属该交易所，也无从证明。"
+ ],
+ "state": "no_source_registered",
+ "state_reason": "仓库内没有带日期的历史交易所标签来源（EXCHANGE_LABELS_API_URL 仍未确定）。空注册表是诚实状态：交易所标签层因此按 external_source_unavailable 记 not_attempted，比率报 not_reportable 而不是 0。",
+ "sources": [],
+ "labels": []
+}

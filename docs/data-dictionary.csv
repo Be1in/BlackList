@@ -1,0 +1,117 @@
+table,field,dtype,allowed_values,required,availability_tier,source,notes
+events,event_id,string,,yes,A,sha256("ethereum|tx_hash|log_index") 前16字节 hex,重跑必须相同
+events,chain,enum,ethereum,yes,A,采集参数,仅登记链可入表
+events,chain_id,int,1,yes,A,链参数,
+events,token_symbol,enum,USDT|USDC,yes,A,日志地址映射,
+events,token_contract,address,,yes,A,采集参数,小写 0x
+events,block_number,int,,yes,A,日志元数据,
+events,block_hash,string,,yes,A,区块头,canonical 校验
+events,block_time_utc,rfc3339,,yes,A,区块头 timestamp,秒精度 UTC
+events,event_time_precision,enum,second,yes,A,固定值,
+events,tx_hash,string,,yes,A,日志元数据,
+events,tx_index,int,,yes,A,日志元数据,
+events,log_index,int,,yes,A,日志元数据,
+events,log_order_key,string,,yes,A,block:010d:tx_index:04d:log_index:06d,唯一排序键
+events,tx_event_count,int,,yes,A,同 tx 事件行数,识别多事件交易
+events,event_topic0,string,,yes,A,topics[0],
+events,event_signature,string,"AddedBlackList(address)|RemovedBlackList(address)|DestroyedBlackFunds(address,uint256)|Blacklisted(address)|UnBlacklisted(address)",yes,A,topic0 查表,见字典第1节
+events,abi_source,string,,no,A,已验证 ABI 标识+sha256,缺失记 abi_unavailable
+events,raw_topics,json,,yes,A,日志原样,
+events,raw_data,hex,,yes,A,日志原样,
+events,is_proxy,bool,true|false,no,A,代理槽探测,无法判定留空
+events,proxy_address,address,,no,A,代理槽,非代理为空
+events,implementation_address,address,,no,A,代理槽或 token_contract,无法判定记 low confidence
+events,contract_code_hash,string,,no,A,eth_getCode(implementation) 的 keccak256,
+events,contract_version_label,string,,no,A,源码版本标注,如 FiatTokenV2_2
+events,contract_version_source,string,,no,A,版本判定依据,
+events,contract_version_confidence,enum,high|low,yes,A,判定结果,
+events,event_class,enum,freezing|unfreezing|destruction,yes,A,topic0+token 唯一映射,不可多值
+events,affected_address,address,,yes,A,日志 ABI 解码,小写
+events,address_decode_source,enum,topic|data_word,yes,A,解码器,复核用
+events,blacklist_state_before,enum,blacklisted|not_blacklisted,yes,A,状态机推演,
+events,blacklist_state_after,enum,blacklisted|not_blacklisted,yes,A,状态机推演,destruction 前后均为 blacklisted
+events,blacklist_transition,bool,true|false,yes,A,before != after,不得由日志类型推断
+events,destruction_amount_raw,decimal_string,,no,A,日志参数,仅 destruction 行；销毁不 emit Transfer
+events,destruction_amount_token,decimal_string,,no,A,raw/10^decimals,仅 destruction 行
+events,token_decimals,int,6,yes,A,合约常量,
+events,balance_pre_event_raw,decimal_string,,no,A,STATE_AT_BLOCK_END + 调整量,缺失记 archive_state_unavailable
+events,balance_pre_event_token,decimal_string,,no,A,raw/10^decimals,
+events,balance_pre_event_adjustment_raw,decimal_string,,no,A,同区块内更早 Transfer 带符号和,无调整记 0
+events,balance_pre_event_state_block,int,,yes,A,block_number-1,
+events,balance_pre_event_source,enum,archive_state_end_of_block,yes,A,固定值,
+events,balance_pre_event_precision,enum,exact_from_state_plus_transfers|lower_bound_only,yes,A,推导,
+events,balance_query_id,string,,no,A,外键 balances.query_id,
+events,source_endpoint_label,string,,yes,A,逻辑端点名,不写密钥
+events,source_query,string,,yes,A,区块范围+地址+topics,重放凭据
+events,source_retrieved_at_utc,rfc3339,,yes,A,抓取时刻,
+events,raw_log_path,string,,yes,A,data/raw/logs/...,
+events,raw_log_sha256,string,,yes,A,原始响应摘要,
+events,dataset_contract_version,string,v1,yes,A,固定值,
+events,missingness_status,enum,complete|partial|unavailable,yes,A,由空字段推导,
+events,missing_fields,string,,no,A,分号分隔字段名,无缺失为空串
+events,missing_reason_code,enum,not_collected|rpc_unavailable|log_not_retrievable|archive_state_unavailable|abi_unavailable|external_source_unavailable|label_date_missing|sanctions_record_missing|not_observable|not_applicable,no,A,规则判定,complete 时为空
+events,verification_status,enum,verified|unverifiable|pending,yes,A,核验结果,
+events,analysis_eligibility,enum,core|core_unverifiable|restricted_subset|excluded,yes,A,第4节规则推导,
+events,exclusion_rule_id,enum,R1|R2|R3|R4|R5|R6|R7|R8,no,A,规则判定,未排除为空
+events,exclusion_reason,string,,no,A,触发证据,
+events,notes,string,,no,A,人工说明,
+balances,query_id,string,,yes,A,sha256(payload) 前16字节,主键
+balances,chain,enum,ethereum,yes,A,查询参数,
+balances,token_symbol,enum,USDT|USDC,yes,A,查询参数,
+balances,token_contract,address,,yes,A,查询参数,
+balances,address,address,,yes,A,查询参数,小写
+balances,balance_reference,enum,at_freeze|at_event|at_study_cutoff,yes,A,口径声明,D1/D2 不混用；at_event 仅诊断
+balances,reference_event_id,string,,no,A,events.event_id,截止日口径为空
+balances,balance_block_number,int,,yes,A,实际查询区块,
+balances,balance_block_hash,string,,yes,A,区块头,确认 canonical
+balances,balance_raw,decimal_string,,no,A,eth_call 返回,最小单位
+balances,balance_token,decimal_string,,no,A,raw/10^decimals,
+balances,token_decimals,int,6,yes,A,合约常量,
+balances,blacklist_state_at_balance_block,enum,blacklisted|not_blacklisted,no,A,isBlacklisted 历史查询,与状态机互校
+balances,balance_source,enum,archive_eth_call,yes,A,查询方式,销毁金额见 events.destruction_amount_raw
+balances,query_payload_sha256,string,,yes,A,请求摘要,
+balances,queried_at_utc,rfc3339,,yes,A,抓取时刻,
+balances,missingness_status,enum,complete|partial|unavailable,yes,A,推导,
+balances,missing_reason_code,enum,archive_state_unavailable|rpc_unavailable|not_collected|not_applicable,no,A,规则判定,
+balances,notes,string,,no,A,人工说明,
+matches,match_id,string,,yes,B,sha256(event_id+layer+source) 前16字节,
+matches,event_id,string,,yes,B,events.event_id,
+matches,match_layer,enum,ofac_sdn|exchange_label,yes,B,匹配层,
+matches,match_status,enum,matched|unmatched|not_attempted|not_applicable,yes,B,匹配结果,unmatched 不等于未受制裁
+matches,matched_entity_name,string,,no,B,清单/标签条目,
+matches,matched_record_id,string,,no,B,SDN UID 或标签库 ID,
+matches,match_evidence_address_string,string,,no,B,外部记录原样地址串,证明精确匹配
+matches,match_evidence_text,string,,no,B,条目原文片段,
+matches,match_source_name,string,,no,B,来源名称,
+matches,match_source_url,string,,no,B,公开链接,
+matches,match_source_snapshot_sha256,string,,no,B,快照摘要,
+matches,matched_at_utc,rfc3339,,yes,B,执行时刻,
+matches,sanctions_public_timestamp,date,,no,B,公开制裁记录中的日期,只接受有日期依据的记录；快照日期不写此字段
+matches,sanctions_date_basis,enum,designation_date|list_publication_date|list_update_observed_date,no,B,日期口径,与 events.block_time_utc 不共用
+matches,sanctions_date_precision,enum,day,no,B,精度,
+matches,label_date,date,,no,B,生效/发布日,无日期只用于敏感性参数
+matches,label_date_basis,enum,label_publication_date|list_snapshot_date|observed_first_seen_date,no,B,日期口径,
+matches,label_date_precision,enum,day,no,B,精度,
+matches,match_confidence,enum,exact_address|none,yes,B,只有完全一致才算 matched,
+matches,missing_reason_code,enum,sanctions_record_missing|external_source_unavailable|label_date_missing|not_applicable,no,B,规则判定,
+matches,notes,string,,no,B,人工说明,
+validation,validation_id,string,,yes,B,顺序号或摘要,
+validation,event_id,string,,no,B,events.event_id,整表级检查可空
+validation,check_type,enum,source_position|order_version|balance_state|manual_reference|schema_conformance,yes,B,检查类别,
+validation,field_name,string,,yes,B,字典内字段名,字典外字段视为违约
+validation,contract_value,string,,no,B,重建输出值,
+validation,reference_value,string,,no,B,独立参照值,
+validation,reference_source,string,,no,B,人工核对或外部历史状态,
+validation,reference_retrieved_at_utc,rfc3339,,no,B,参照获取时刻,
+validation,agreement,enum,match|mismatch|unverifiable,yes,B,对照结果,
+validation,deviation,string,,no,B,偏差描述,
+validation,deviation_reason,string,,no,B,已定位原因,未定位写 unresolved
+validation,resolution,string,,no,B,处置方式,
+validation,reviewer,string,,no,B,核对人,
+validation,reviewed_at_utc,rfc3339,,no,B,核对时刻,
+chain_registry,chain,enum,ethereum|tron,yes,A,链登记,
+chain_registry,chain_id,int,,no,A,EVM 链号,非 EVM 为空
+chain_registry,in_scope,enum,verified_sample|registered_pending|excluded,yes,A,范围判定,只有 verified_sample 可入 events
+chain_registry,scope_basis,string,,yes,A,依据来源,
+chain_registry,rpc_endpoint_label,string,,no,A,逻辑端点名,
+chain_registry,notes,string,,no,A,可空,

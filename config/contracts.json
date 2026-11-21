@@ -1,0 +1,71 @@
+{
+  "dataset_contract_version": "v1",
+  "chain": {
+    "name": "ethereum",
+    "chain_id": 1
+  },
+  "token_order": ["USDT", "USDC"],
+  "tokens": {
+    "USDT": {
+      "contract": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "decimals": 6,
+      "blacklist_state_function": "isBlackListed(address)",
+      "abi_snapshot": "data/raw/abi/USDT.abi.json",
+      "events": {
+        "freezing": {
+          "signature": "AddedBlackList(address)",
+          "topic0": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc"
+        },
+        "unfreezing": {
+          "signature": "RemovedBlackList(address)",
+          "topic0": "0xd7e9ec6e6ecd65492dce6bf513cd6867560d49544421d0783ddf06e76c24470c"
+        },
+        "destruction": {
+          "signature": "DestroyedBlackFunds(address,uint256)",
+          "topic0": "0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6"
+        }
+      }
+    },
+    "USDC": {
+      "contract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "decimals": 6,
+      "blacklist_state_function": "isBlacklisted(address)",
+      "abi_snapshot": "data/raw/abi/USDC_impl.abi.json",
+      "events": {
+        "freezing": {
+          "signature": "Blacklisted(address)",
+          "topic0": "0xffa4e6181777692565cf28528fc88fd1516ea86b56da075235fa575af6a4b855"
+        },
+        "unfreezing": {
+          "signature": "UnBlacklisted(address)",
+          "topic0": "0x117e3210bb9aa7d9baff172026820255c6f6c30ba8999d1c2fd88e2848137c4e"
+        }
+      }
+    }
+  },
+  "balance_evidence_event": {
+    "signature": "Transfer(address,address,uint256)",
+    "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+  },
+  "proxy_slots": {
+    "fiat_token_implementation": "0x7050c9e0f4ca769c69bd3a8ef740bc37934f8e2c036e5a723fd8ee048ed3f8c3",
+    "eip1967_implementation": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d3f8b0"
+  },
+  "contract_fingerprints": {
+    "0xb44fb4e949d0f78f87f79ee46428f23a2a5713ce6fc6e0beb3dda78c2ac1ea55": {
+      "token_symbol": "USDT",
+      "label": "TetherToken",
+      "source": "bytecode fingerprint pinned during ticket 01; label from verified source at implementation (TetherToken@v0.4.18+commit.9cf6e910)"
+    },
+    "0xcdfb7d322961af3acae7a8f7ee8b69c205b36f576cc5b077f170c7eb8ecbe3ea": {
+      "token_symbol": "USDC",
+      "label": "FiatTokenV2_2",
+      "source": "bytecode fingerprint pinned during ticket 01; label from verified source at implementation (FiatTokenV2_2@v0.6.12+commit.27d51765)"
+    },
+    "0x767fcf585fbd2983505154555f183b121c91e5dd4d56608f2d6448fb82a1fdfa": {
+      "token_symbol": "USDC",
+      "label": "FiatTokenV1",
+      "source": "bytecode fingerprint pinned during ticket 01; label from verified source at implementation (FiatTokenV1@v0.4.24+commit.e67f0147)"
+    }
+  }
+}
