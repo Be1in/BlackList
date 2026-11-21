@@ -64,7 +64,6 @@ data/                   不入库，按 DATASET.md §5 重建
   samples/              小样本 CSV，供不重跑全量时检查字段
 docs/                   定义、数据字典、复现说明、已知问题、ADR
 scripts/                采集与重建入口，recon/ 为共用模块
-.scratch/               规格与工单（本地 markdown issue tracker）
 DATASET.md              数据集说明卡
 dataset_manifest.json   交付文件的 sha256、行数与批次 id
 ```

@@ -1,6 +1,6 @@
 # 冻结事件定义契约 v1
 
-契约版本：`2026-11-13 / v1`（对应工单 `.scratch/freeze-event-reconstruction/issues/01-definitions-and-data-dictionary.md`）
+契约版本：`2026-11-13 / v1`
 
 本文件定义"一条事件记录长什么样"：三类事件的边界、两套余额口径、两类时间来源的可观测性。字段级契约见 `docs/data-dictionary.md`。后续采集、匹配与分析只消费数据字典声明的字段；本文件出现的概念若未落到字典字段（采集参数除外），即视为未定义。
 
